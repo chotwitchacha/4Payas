@@ -1,0 +1,33 @@
+.components-table-demo-control-bar .ant-form-item {
+    margin-right: 16px;
+    margin-bottom: 8px;
+  }
+
+tfoot th,
+tfoot td {
+    background: #fafafa;
+  }
+  [data-theme="dark"] tfoot th,
+  [data-theme="dark"] tfoot td {
+    background: #1d1d1d;
+  }
+
+.btn {
+    background-color: '#2F80ED';
+    color: '#FFFFFF';
+    border-radius: 35;
+    font-family: 'Prompt';
+    margin-left: 20;
+    margin-block: 20;
+    font-size: 1;   
+}
+
+.btn:active {
+  background-color: #27AE60;
+    color: '#FFFFFF';
+    border-radius: 35;
+    font-family: 'Prompt';
+    margin-left: 20;
+    margin-block: 20;
+    font-size: 1;   
+}
