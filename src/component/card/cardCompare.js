@@ -8,12 +8,16 @@ import { ButtonGroup } from 'rsuite';
 import { Button } from '@material-ui/core';
 import { Container } from "semantic-ui-react";
 import DropdownExampleSelection from "../dropdown/dropdownData";
-import { Radio, Space } from 'antd';
+import { Radio, Space,  Select } from 'antd';
 import 'antd/dist/antd.css';
 import axios from "axios";
 import ScatterChart from "../chart/scatterChart";
 import PotentailBar from "../chart/barPotentail";
 import PerformanceBar from "../chart/barPerformance";
+import TableChartPerform from "../chart/tableChartPerform";
+import TableChartProten from "../chart/tableChartPoten";
+import SubTableChartPerform from "../chart/subTableChartPerform";
+import SubTableScorePerform from "../chart/subTableScorePerform";
 
 
 
@@ -51,24 +55,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const data = [
-    {
-        timeline: 'รอบที่ 1',
-        date: '01/01/2022 - 07/01/2022'
+    { 
+      timeline: '1',
+      date: '01/01/2022-07/01/2022'
     },
-    {
-        timeline: 'รอบที่ 2',
-        date: '08/01/2022 - 14/01/2022'
+    { 
+      timeline: '2',
+      date: '08/01/2022-14/01/2022'
     },
-    {
-        timeline: 'รอบที่ 3',
-        date: '15/01/2022 - 21/01/2022'
+    { 
+      timeline: '3',
+      date: '15/01/2022-21/01/2022'
     },
-    {
-        timeline: 'รอบที่ 4',
-        date: '28/01/2022 - 31/01/2022'
+    { 
+      timeline: '4',
+      date: '28/01/2022-31/01/2022'
     },
-
-]
+  
+  ]
 
 const CardCompare = () => {
 
@@ -100,6 +104,24 @@ const CardCompare = () => {
     const [employee, setEmployee] = useState([])
     const [name, getName] = useState()
     const [hasData, setHasData] = useState();
+    const [list, setList] = useState()
+    const [project,setProject] = useState([])
+    const { Option } = Select;
+    const [resultPorten, setResultPoten] = useState([])
+    const [subTotal, setSubTotal] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:8090/api/project').
+        then((res) => {
+            setProject(res.data)
+        })
+    }, []);
+
+    const dataprovider = project.map((item,index) => {
+        return (
+            <Option key={item.project_id} > {item.project_name} </Option>
+        )
+    })
 
 
     const onChangeRadio = (e) => {
@@ -111,148 +133,228 @@ const CardCompare = () => {
         getName(e.target.value);
     };
 
-    const getEmployee = () => {
-        axios.get('http://localhost:8090/api/user')
-            .then((res) => {
-                setEmployee(res.data)
-            })
+    const initialdata = {
+        timeline: value,
+        project_id: list
+    }
+
+    console.log('list', initialdata);
+
+    const getEmployee = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8090/api/chartPerform',{
+            timeline: value,
+            project_id: list
+        })
+        .then((res) => {
+            console.log("api", res.data)
+            setEmployee(res.data)
+        })
+
+        axios.post('http://localhost:8090/api/SubChartPerform',{
+            timeline: value,
+            project_id: list
+        })
+        .then((res) => {
+            console.log("api", res.data)
+            setSubTotal(res.data)
+        })
+
+        axios.post('http://localhost:8090/api/resultScore',{
+            timeline: value,
+            project_id: list
+        })
+        .then((res) => {
+            console.log("api", res.data)
+            setResultPoten(res.data)
+        })
+
+
+    }
+
+
+    const handleChange = (value) => {
+        setList(`${value}`) 
     }
 
     return (
         //--------- ส่วนที่ 1 ---------//
-        <Grid container spacing={2}>
-            <Grid item xs={4}>
-                <Box sx={{ flexGrow: 1 }} style={{ background: '#F3F6FB' }}>
-                    <Item style={{ marginBottom: 10 }}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <div>
-                                    <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>โปรดเลือกโปรเจค</div>
-                                    <Container style={{ width: 250 }}>
-                                        <DropdownExampleSelection />
-                                    </Container>
-                                </div>
-                                <div>
-                                    <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>ช่วงเวลา/รอบการประเมิน</div>
-                                    <div style={{ display: 'flex', margin: '0 0 0 40px', fontSize: 14 }}>
-                                        <Radio.Group onChange={onChangeRadio} value={value}>
-                                            <Space direction="vertical">
-                                                {date.map((index) => (
-                                                    <>
-                                                        <Radio className={classes.text_time} value={index}> {index.timeline}: {index.date}</Radio>
+        <>
+            {
+                employee.length !== 0 ? (
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <Box sx={{ flexGrow: 1 }} style={{ background: '#F3F6FB' }}>
+                                <Item style={{ marginBottom: 10 }}>
+                                    <Grid container spacing={1}>
+                                        <Grid item xs={12}>
+                                            <div style={{ marginBottom: 20}}>
+                                                <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>โปรดเลือกโปรเจค</div>
+                                                <Container style={{ width: 250 }}>
+                                                    <Select
+                                                        style={{ width: "100%" }}
+                                                        placeholder="เลือกโปรเจค"
+                                                        onChange={handleChange}
+                                                        value={list}
+                                                    >
+                                                        {dataprovider}
+                                                    </Select>
+                                                </Container>
+                                            </div>
+                                            <div>
+                                                <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>ช่วงเวลา/รอบการประเมิน</div>
+                                                <div style={{ display: 'flex', margin: '20px 0 0 40px', fontSize: 14 }}>
+                                                    <Radio.Group onChange={onChangeRadio} value={value}>
+                                                        <Space direction="vertical">
+                                                            {date.map((index) => (
+                                                                <>
+                                                                    <Radio className={classes.text_time} value={index.timeline}> รอบที่{index.timeline}: {index.date}</Radio>
 
-                                                    </>
-                                                ))}
+                                                                </>
+                                                            ))}
 
-                                            </Space>
-                                        </Radio.Group>
-                                    </div>
-                                </div>
-                                <Grid item xs={11} style={{ textAlign: 'end' }} >
-                                    <ButtonGroup >
-                                        <Button onClick={getEmployee} className={classes.button}>
-                                            ตกลง
-                                        </Button>
-                                    </ButtonGroup>
+                                                        </Space>
+                                                    </Radio.Group>
+                                                </div>
+                                            </div>
+                                            {/* <StepStatus /> */}
+                                            <Grid item xs={11} style={{ textAlign: 'end' }} >
+                                                <ButtonGroup >
+                                                    <Button onClick={getEmployee} className={classes.button}>
+                                                        ตกลง
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Item>
+                            </Box>
+                        </Grid>
+
+                        <Grid item xs={8}>
+                            <Item style={{ fontSize: 17, fontFamily: 'Prompt', textAlign: 'left', backgroundColor: '#153D77', color: '#fff' }}>ผลการประเมิน Performance</Item>
+                            <Item style={{ marginBottom: 10 }}>
+                                
+                                    <Grid item  >
+                                        <SubTableChartPerform result={employee} subResult={subTotal}/>
+                                    </Grid>
+                                
+                            </Item>
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}>
+                        </Grid>
+                        <Grid item xs={4}> </Grid>
+                        <Grid item xs={8}>
+                            <Item style={{ fontSize: 17, fontFamily: 'Prompt', textAlign: 'left', backgroundColor: '#153D77', color: '#fff' }}>คะแนน Performance รายข้อ : ผลการประเมินโดยหัวหน้า</Item>
+                            <Item style={{ marginBottom: 10 }}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <TableChartPerform result={employee}/>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </Item>
                         </Grid>
-                    </Item>
+                        <Grid item xs={4}> </Grid>
+                        <Grid item xs={8}>
+                            <Item style={{ fontSize: 17, fontFamily: 'Prompt', textAlign: 'left', backgroundColor: '#153D77', color: '#fff' }}>คะแนน Potentail รายข้อ</Item>
+                            <Item style={{ marginBottom: 10 }}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <SubTableScorePerform  result={subTotal}/>
+                                    </Grid>
+                                </Grid>
+                            </Item>
+                        </Grid>
+                    </Grid>
+                ) : (
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <Box sx={{ flexGrow: 1 }} style={{ background: '#F3F6FB' }}>
+                                <Item style={{ marginBottom: 10 }}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <div style={{ marginBottom: 20}}>
+                                                <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>โปรดเลือกโปรเจค</div>
+                                                <Container style={{ width: 250 }}>
+                                                    <Select
+                                                        style={{ width: "100%" }}
+                                                        placeholder="เลือกโปรเจค"
+                                                        onChange={handleChange}
+                                                        value={list}
+                                                    >
+                                                        {dataprovider}
+                                                    </Select>
+                                                </Container>
+                                            </div>
+                                            <div>
+                                                <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>ช่วงเวลา/รอบการประเมิน</div>
+                                                <div style={{ display: 'flex', margin: '20px 0 0 40px', fontSize: 14 }}>
+                                                    <Radio.Group onChange={onChangeRadio} value={value}>
+                                                        <Space direction="vertical">
+                                                            {date.map((index) => (
+                                                                <>
+                                                                    <Radio className={classes.text_time} value={index.timeline}> รอบที่{index.timeline}: {index.date}</Radio>
 
-                    {/* --------- ส่วนที่ 2 --------- */}
-                    <Item style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>รายชื่อสมาชิก
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <div>
-                                    <div style={{ display: 'flex', margin: '20px 0 0 50px' }}>
-                                        <Radio.Group onChange={onChangeData} value={name}>
-                                            <Space direction="vertical">
-                                                {employee.map((index) => (
-                                                    <>
-                                                        <Radio className={classes.text_time} value={index}> {index.name}</Radio>
-                                                    </>
-                                                ))}
-                                            </Space>
-                                        </Radio.Group>
-                                    </div>
-                                </div>
-                            </Grid>
-                        </Grid>
-                    </Item>
-                </Box>
-            </Grid>
+                                                                </>
+                                                            ))}
 
-            <Grid item xs={8}>
-                <Grid item xs={12}>
-                    <Item style={{ fontSize: 17, fontFamily: 'Prompt', textAlign: 'left', backgroundColor: '#153D77', color: '#fff' }}>ผลการประเมิน Performance</Item>
-                    <Item style={{ marginBottom: 10 }}>
-                        <box style={{ display: 'flex' }}>
-                            <Grid item xs={6}>
-                                <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333' }}>ผลการประเมินโดยหัวหน้า</p>
-                                <PotentailBar />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333' }}>ผลการประเมินตนเอง</p>
-                                <PotentailBar />
-                            </Grid>
-                        </box>
-                    </Item>
-                </Grid>
-            </Grid>
+                                                        </Space>
+                                                    </Radio.Group>
+                                                </div>
+                                            </div>
+                                            {/* <StepStatus /> */}
+                                            <Grid item xs={11} style={{ textAlign: 'end' }} >
+                                                <ButtonGroup >
+                                                    <Button onClick={getEmployee} className={classes.button}>
+                                                        ตกลง
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Item>
 
-            <Grid item xs={4}> </Grid>
-            <Grid item xs={8}>
-                <Item style={{ fontSize: 17, fontFamily: 'Prompt', textAlign: 'left', backgroundColor: '#153D77', color: '#fff' }}>คะแนน Performance รายข้อ</Item>
-                <Item style={{ marginBottom: 10 }}>
-                    <Item style={{ fontSize: 16, fontFamily: 'Prompt', textAlign: 'center', color: '#333333' }}>1. ปริมาณงานที่ทำได้ </Item>
-                    <box style={{ display: 'flex' }}>
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินโดยหัวหน้า</p>
-                            <PotentailBar />
+                                {/* --------- ส่วนที่ 2 --------- */}
+                            </Box>
                         </Grid>
 
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินตนเอง</p>
-                            <PotentailBar />
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}>
+                            {/* <Item style={{ fontFamily: 'Prompt', fontSize: 16, padding: 10, textAlign: 'left' }}>รายชื่อสมาชิก
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <div>
+                                            <div style={{ display: 'flex', margin: '20px 0 0 50px' }}>
+                                                <Radio.Group onChange={onChangeData} value={name}>
+                                                    <Space direction="vertical">
+                                                        {employee.map((index) => (
+                                                            <>
+                                                                <Radio className={classes.text_time} value={index}> {index.name}</Radio>
+                                                            </>
+                                                        ))}
+                                                    </Space>
+                                                </Radio.Group>
+                                            </div>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </Item> */}
                         </Grid>
-                    </box>
-                </Item>
-            </Grid>
-
-            <Grid item xs={4}> </Grid>
-            <Grid item xs={8}>
-                <Item style={{ marginBottom: 10 }}>
-                    <Item style={{ fontSize: 16, fontFamily: 'Prompt', textAlign: 'center', color: '#333333' }}>2. Performance Ratio </Item>
-                    <box style={{ display: 'flex' }}>
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินโดยหัวหน้า</p>
-                            <PotentailBar />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินตนเอง</p>
-                            <PotentailBar />
-                        </Grid>
-                    </box>
-                </Item>
-            </Grid>
-
-            <Grid item xs={4}> </Grid>
-            <Grid item xs={8}>
-                <Item style={{ marginBottom: 10 }}>
-                    <Item style={{ fontSize: 16, fontFamily: 'Prompt', textAlign: 'center', color: '#333333' }}>3. Waste </Item>
-                    <box style={{ display: 'flex' }}>
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินโดยหัวหน้า</p>
-                            <PotentailBar />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <p style={{ fontSize: 14, fontFamily: 'Prompt', textAlign: 'right', color: '#333333', marginTop: 10 }}>ผลการประเมินตนเอง</p>
-                            <PotentailBar />
-                        </Grid>
-                    </box>
-                </Item>
-            </Grid>
-        </Grid>
+                        <Grid item xs={4}></Grid>
+                        <Grid item xs={4}></Grid>
+                        <Grid item xs={4}> </Grid>
+                        <Grid item xs={8}></Grid>
+                        <Grid item xs={4}> </Grid>
+                        <Grid item xs={8}></Grid>
+                    </Grid>
+                )
+            } 
+        </>
+        
     )
 };
 

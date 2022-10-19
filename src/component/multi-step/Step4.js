@@ -194,7 +194,7 @@ const Step4 = ({data, onPrevious, onNext, setShow, step, allData, onChanges, tim
             </div>
             <div className={classes.div}>
                 <CCardBody>
-                    <CCardText style={{ lineHeight: 2, marginLeft: 30, fontSize: 18, fontFamily: 'Prompt' }}> 1. คุณภาพ : ผลงานหรืองานที่ทำ มีความละเอียด ถูกต้อง ครบถ้วน ได้มาตารฐาน ไม่มีการแก้ไขหรือปรับปรุง </CCardText>
+                    <CCardText style={{ lineHeight: 2, marginLeft: 30, fontSize: 18, fontFamily: 'Prompt' }}>4. ความน่าเชื่อถือ : ไว้ใจได้ มีความซื่อสัตย์ ไม่ต้องคอยตรวจเช็ค ตรวจสอบ หรือติดตามควบคุม </CCardText>
                     <CCardText style={{ color: '#153D77', textAlign: 'center', fontFamily: 'Prompt' }}>เปรียบเทียบ</CCardText>
                     {/* <box className={classes.radioBtn}>
                             <div>

@@ -116,7 +116,7 @@ const ResultOne = ({data, projectid, timeline}) => {
         var item = [];
     
         //Add Header Row
-        item.push("Item");
+        item.push("รายชื่อ");
         item.push.apply(item, newCols);
         ret.push(item);
     
@@ -133,28 +133,28 @@ const ResultOne = ({data, projectid, timeline}) => {
       };
     
     const arrayToHTMLTable = (myArray) => {
-    var result = "<table border='1' cellpadding='7' cellspacing='0'>";
-    for (var i = 0; i < myArray.length; i++) {
-        result += "<tr>";
-        for (var j = 0; j < myArray[i].length; j++) {
-        result += "<td padding='2'>" + myArray[i][j] + "</td>";
-        }
-        result += "</tr>";
-    }
-    result += "<tr >";
-      result += "<td>" + "สรุปคะแนน" + "</td>"
-      for (var index = 0; index < sumTotal.length; index++) {
-        result += "<td>" + sumTotal[index] + "</td>";
+      var result = "<table border='1' cellpadding='7' cellspacing='0' style='font-family: Prompt ;font-size: 12.5px;' >"
+      for (var i = 0; i < myArray.length; i++) {
+          result += "<tr background-color: '#f2f2f2'>";
+          for (var j = 0; j < myArray[i].length; j++) {
+          result += "<td width='500px' height='50' >" + myArray[i][j] + "</td>";
+          }
+          result += "</tr>";
       }
-    result += "</tr>";
-    result += "</table>";
+      result += "<tr >";
+        result += "<td width='auto' height='50'>" + "สรุปคะแนน" + "</td>"
+        for (var index = 0; index < sumTotal.length; index++) {
+          result += "<td width='500px' height='50'>" + sumTotal[index] + "</td>";
+        }
+      result += "</tr>";
+      result += "</table>";
 
-    return result;
+      return result;
     };
 
     $(function () {
         var output = getPivotArray(concat, 0, 1, 2, 3);
-        $("#pivotTable2").html(arrayToHTMLTable( output));
+        $("#pivotTable2").html(arrayToHTMLTable( output)).css({"background-color": "#F5F5F5"},{ 'font-family':'sans-serif'});
     });
 
 
@@ -165,7 +165,7 @@ const ResultOne = ({data, projectid, timeline}) => {
                 datas.length !== 0 ? (
                   <>
             <CCardText style={{ lineHeight: 2, fontSize: 18, fontFamily: 'Prompt', textAlign: 'left', marginBottom: '20px' }}>
-                1. คุณภาพ : ผลงานหรืองานที่ทำ มีความละเอียด ถูกต้อง ครบถ้วน ได้มาตารฐาน ไม่มีการแก้ไขหรือปรับปรุง
+                1. คุณภาพ : ผลงาน หรืองานที่ทำ มีความละเอียด ถูกต้องครบถ้วน ได้ตามมาตรฐาน ไม่มีการแก้ไขหรือปรับปรุง
             </CCardText> 
                     <div style={{marginBottom: '20px'}} id="pivotTable2"></div>
                     </>

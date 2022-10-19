@@ -4,8 +4,11 @@ import groupBy from "lodash/groupBy";
 import sumBy from "lodash/sumBy";
 import _ from "lodash";
 import { ItemMeta } from 'semantic-ui-react';
+import './chart.css'
+
 
 const PerformanceBar = ({result}) => {
+
 
     const list = []
     const valueMax = []
@@ -18,7 +21,6 @@ const PerformanceBar = ({result}) => {
     const filterData = []
     const mapfilterData = []
 
-    console.log('result', result);
 
     result.map((item) => {
         list.push({name: item.name, value_added: item.value_added, perform_radtio: item.perform_radtio, waste: item.waste })
@@ -27,7 +29,6 @@ const PerformanceBar = ({result}) => {
     })
 
     const scoreMax = Math.max(...valueMax)
-    console.log('maxValuePerform', scoreMax);
     
 
     const groupArrayResult = groupBy(list, "name");
@@ -45,13 +46,8 @@ const PerformanceBar = ({result}) => {
         valueWaste.push({name: key, valueWaste: Number(((100-valuesWaste) *0.15).toFixed(0))})
       });
 
-    console.log('valueAdded', valueAdded);
-    console.log('valueRadtio', valueRadtio);
-    console.log('valueWaste', valueWaste);
-
     const concat = valueAdded.concat(valueRadtio,valueWaste);
 
-    console.log('concat', concat);
 
     const groupArrayConcat = groupBy(concat, "name");
     Object.entries(groupArrayConcat).map(([key, values]) => {
@@ -77,16 +73,15 @@ const PerformanceBar = ({result}) => {
         })
 
         
-        console.log('sumArray2', sumArray);
-        console.log('mapName', mapName);
-        
     
 
     
     const [data, setData] = useState([{ data: sumArray}])
-    console.log('data2', data);
+
 
     const option = {
+        colors : ['#56CCF2'],
+        fontColor: ['#000000'],
         chart: {
             type: 'bar',
             height: 350
@@ -102,6 +97,12 @@ const PerformanceBar = ({result}) => {
         },
         xaxis: {
             categories: mapName,
+            style: {
+                fontSize: '12px',
+                fontFamily: 'Prompt',
+                fontWeight: 400,
+                cssClass: 'apexcharts-xaxis-label',
+            },
         }
     }
 

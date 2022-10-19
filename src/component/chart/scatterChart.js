@@ -116,8 +116,6 @@ const ScatterChart = ({resultPerform, resultPoten}) => {
         resultData.push({name: key, data: [values.map(item => item.data)]})
     })
 
-    console.log("resultData", resultData);
-
     const [data, setData] = useState(resultData)
 
 

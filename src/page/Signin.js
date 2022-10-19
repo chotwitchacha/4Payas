@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext  } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -8,6 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import swal from 'sweetalert';
 import { Box } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import { withRouter, Redirect } from "react-router";
+import axios from 'axios';
+import {AppContext} from '../ContextCase';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -83,12 +86,15 @@ async function loginUser(credentials) {
     .then(data => data.json())
 }
 
-export default function Signin() {
+const Signin = () => {
   const classes = useStyles();
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [employee, setEmpolyee] = useState()
+  const id = ''
   let history = useHistory();
-  
+
+
   const handleSubmit = async e => {
     e.preventDefault();
     const response = await loginUser({
@@ -96,18 +102,28 @@ export default function Signin() {
       password
     });
     if ('accessToken') {
-      swal("Success", response.message, "success", {
-        buttons: false,
-        timer: 2000,
-      })
-        .then((value) => {
+        const getData = await axios.post('http://localhost:8090/api/employee', {
+            email: username,
+            password: password
+          }).then((res) => res.data)
+          const id = getData.map(item => item.employee_id)
+
+          window.location.href = `/dashboard/${id}`;
+
           localStorage.setItem('accessToken', response['accessToken']);
           localStorage.setItem('user', JSON.stringify(response['user']));
-          history.push("/dashboard");
-        });
+
     } else {
       swal("Failed", response.message, "error");
     }
+  }
+
+  const onChangeEmail = (value) => {
+    setUserName(value)
+  }
+
+  const onChangePassword = (value) => {
+    setPassword(value)
   }
 
   return (
@@ -128,7 +144,7 @@ export default function Signin() {
                   id="email"
                   name="email"
                   label="Username"
-                  onChange={e => setUserName(e.target.value)}
+                  onChange={(e) => onChangeEmail(e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -138,7 +154,7 @@ export default function Signin() {
                   name="password"
                   label="Password"
                   type="password"
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => onChangePassword(e.target.value)}
                 />
                 <Button
                   type="submit"
@@ -156,3 +172,5 @@ export default function Signin() {
     </div>
   );
 }
+
+export default Signin;

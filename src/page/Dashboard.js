@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardDashbord from '../component/card/cardDashboard';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,49 +29,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Dashboard() {
+const Dashboard = ({data}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const user = JSON.parse(localStorage.getItem('user'));
   let history = useHistory();
+  const { id }  = useParams();
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-    history.push("/");
-  };
-
+  console.log('data', data);
 
   return (
 
     <div className={classes.root}>
       <AppBar position="static">
-        {/* <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Profile
-          </Typography>
-            <div>
-             <IconButton onClick={handleMenu} color="inherit">
-              <Avatar src={user.avatar} />
-            </IconButton> 
-             <Menu id="menu-appbar" 
-              anchorEl={anchorEl} 
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu> 
-          </div>
-        </Toolbar> */}
       </AppBar>
       <Typography className={classes.text} variant="h5">
         Dashboard : สรุปการประเมิน
@@ -81,3 +53,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default Dashboard;

@@ -7,7 +7,7 @@ import * as HoIcons from "react-icons/ri";
 export const SidebarData = [
   {
     title: 'Dashboard',
-    path: '',
+    path: '/dashboard',
     icon: <HoIcons.RiHome5Line />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -27,7 +27,7 @@ export const SidebarData = [
   },
   {
     title: 'ประเมิน Potential',
-    path: '',
+    path: '/dashboard',
     icon: <FaIcons.FaWpforms />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -47,7 +47,7 @@ export const SidebarData = [
   },
   {
     title: 'ประเมิน Performance',
-    path: '',
+    path: '/dashboard',
     icon: <FaIcons.FaWpforms />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,

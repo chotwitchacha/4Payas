@@ -143,18 +143,18 @@ const ResultThree = ({data}) => {
       };
     
     const arrayToHTMLTableC = (myArray) => {
-    var result = "<table border='1' cellpadding='7' cellspacing='0'>";
+    var result = "<table border='1' cellpadding='7' cellspacing='0' style='font-family: Prompt ;font-size: 12.5px;' >";
     for (var i = 0; i < myArray.length; i++) {
         result += "<tr>";
         for (var j = 0; j < myArray[i].length; j++) {
-        result += "<td padding='2'>" + myArray[i][j] + "</td>";
+        result += "<td width='auto' height='50'>" + myArray[i][j] + "</td>";
         }
         result += "</tr>";
     }
     result += "<tr >";
-      result += "<td>" + "สรุปคะแนน" + "</td>"
+      result += "<td width='auto' height='50'>" + "สรุปคะแนน" + "</td>"
       for (var index = 0; index < sumTotal.length; index++) {
-        result += "<td>" + sumTotal[index] + "</td>";
+        result += "<td width='auto' height='50'>" + sumTotal[index] + "</td>";
       }
     result += "</tr>";
     result += "</table>";
@@ -164,7 +164,7 @@ const ResultThree = ({data}) => {
 
     $(function () {
         var output = getPivotArray(concat3, 0, 1, 2, 3);
-        $("#pivotTable3").html(arrayToHTMLTableC(output));
+        $("#pivotTable3").html(arrayToHTMLTableC(output)).css({"background-color": "#F5F5F5"},{ 'font-family':'sans-serif'});
     });
 
     return(
@@ -173,7 +173,7 @@ const ResultThree = ({data}) => {
                 datas.length !== 0 ? (
                   <>
                   <CCardText style={{ lineHeight: 2, fontSize: 18, fontFamily: 'Prompt', textAlign: 'left', marginBottom: '20px' }}>
-                      3. คุณภาพ : ผลงานหรืองานที่ทำ มีความละเอียด ถูกต้อง ครบถ้วน ได้มาตารฐาน ไม่มีการแก้ไขหรือปรับปรุง
+                    3. ความรู้ในงาน : มีความรู้ในงาน และมีทักษะในการปฏิบัติงาน มีการเรียนรู้สิ่งใหม่ๆเพื่อพัฒนาตนเองตลอดเวลา
                   </CCardText> 
                     <div style={{marginBottom: '20px'}} id="pivotTable3"></div>
                     </>

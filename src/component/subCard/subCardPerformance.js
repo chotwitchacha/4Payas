@@ -4,12 +4,12 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { ButtonGroup } from 'rsuite';
 import { Button } from '@material-ui/core';
-import TablePerform from "../table/tablePerform";
+import SubTablePerform from "../table/tableSubPerform";
 import TableData from "../table/tableData";
 import { Container } from "semantic-ui-react";
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import DropdownExampleSelection from '../../component/dropdown/dropdownData';
+import DropdownExampleSelection from '../dropdown/dropdownData';
 import { Radio, Space, Select } from 'antd';
 import 'antd/dist/antd.css';
 import axios from "axios";
@@ -50,7 +50,7 @@ const data = [
   
   ]
 
-const PerformanceCard = () => {
+const SubPerformanceCard = () => {
     
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -112,7 +112,7 @@ const PerformanceCard = () => {
 
 
     const getEmployee = () => {
-        axios.post('http://localhost:8090/api/user',{
+        axios.post('http://localhost:8090/api/subUser',{
             project_id: list
         })
         .then((res) => {
@@ -183,8 +183,7 @@ const PerformanceCard = () => {
      <Item>
          <Grid container>
              <Grid item xs={12}>
-                 <TablePerform 
-                    
+                 <SubTablePerform 
                     empolyee={employee}
                     project={list}
                     timeline={value}
@@ -196,4 +195,4 @@ const PerformanceCard = () => {
 )
 };
 
-export default PerformanceCard;
+export default SubPerformanceCard;

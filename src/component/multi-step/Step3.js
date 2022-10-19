@@ -193,7 +193,7 @@ const Step3 = ({data, onPrevious, onNext, setShow, step, allData, onChanges, tim
             </div>
             <div className={classes.div}>
                 <CCardBody>
-                    <CCardText style={{ lineHeight: 2, marginLeft: 30, fontSize: 18, fontFamily: 'Prompt' }}> 1. คุณภาพ : ผลงานหรืองานที่ทำ มีความละเอียด ถูกต้อง ครบถ้วน ได้มาตารฐาน ไม่มีการแก้ไขหรือปรับปรุง </CCardText>
+                    <CCardText style={{ lineHeight: 2, marginLeft: 30, fontSize: 18, fontFamily: 'Prompt' }}> 3. ความรู้ในงาน : มีความรู้ในงาน และมีทักษะในการปฏิบัติงาน มีการเรียนรู้สิ่งใหม่ๆเพื่อพัฒนาตนเองตลอดเวลา </CCardText>
                     <CCardText style={{ color: '#153D77', textAlign: 'center', fontFamily: 'Prompt' }}>เปรียบเทียบ</CCardText>
                     {/* <box className={classes.radioBtn}>
                             <div>

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState , createContext } from 'react';
 import './App.css';
 import Signin from './page/Signin';
 import Sidebar from './component/sidebar/sidebar';
+import ContextCase1 from './ContextCase';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +13,7 @@ import {
 import { styled, useTheme } from '@mui/material/styles';
 
 const drawerWidth = 270;
+export const AppContext = createContext(null);
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -32,19 +35,19 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 function App() {
+  const [users, setUser] = useState("");
   const token = localStorage.getItem('accessToken');
-
-  if (!token) {
+  console.log('App');
+  
+  if(!token){
     return <Signin />
   }
 
   return (
-    <Router>
-      <div className="wrapper">
-        <Sidebar />
-      </div>
-    </Router>
-  );
+    <div className="wrapper">
+      <Sidebar />
+    </div>
+  )
 }
 
 export default App;

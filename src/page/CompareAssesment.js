@@ -36,19 +36,6 @@ export default function CompareAssessments() {
   const user = JSON.parse(localStorage.getItem('user'));
   let history = useHistory();
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
-    history.push("/");
-  };
 
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Header, Table, Rating ,Progress, TableHeader, Tab} from 'semantic-ui-react'
+import { Header, Table, Rating ,Progress, TableHeader, Tab, Segment} from 'semantic-ui-react'
 
-const TableChartPerform = ({result}) => {
+const SubTableScorePerform = ({result}) => {
     const [data, setData] = useState([result]);
     const list = []
     
@@ -13,7 +13,7 @@ const TableChartPerform = ({result}) => {
     console.log('list', list);
     return(
         <>
-            <Table celled fixed className="table">
+            <Table celled fixed className="table" >
                 <Table.Header>
                     <Table.Row >
                         <Table.HeaderCell >รายชื่อ</Table.HeaderCell>
@@ -39,4 +39,4 @@ const TableChartPerform = ({result}) => {
     )
 }
 
- export default TableChartPerform;
+ export default SubTableScorePerform;

@@ -42,6 +42,7 @@ const PotentailBar = ({result}) => {
     
 
     const option = {
+        colors : ['#FFB574'],
         chart: {
             type: 'bar',
             height: 350
@@ -63,7 +64,7 @@ const PotentailBar = ({result}) => {
 
     return (
         <div>
-            <Chart series={data} options={option} type="bar" height={250} />
+            <Chart series={data} options={option} type="bar" height={250} className="table"/>
         </div>
     )
 }

@@ -143,18 +143,18 @@ const ResultFour = ({data}) => {
       };
     
     const arrayToHTMLTableD = (myArray) => {
-    var result = "<table border='1' cellpadding='7' cellspacing='0'>";
+    var result = "<table border='1' cellpadding='7' cellspacing='0' style='font-family: Prompt ;font-size: 12.5px;' >";
     for (var i = 0; i < myArray.length; i++) {
         result += "<tr>";
         for (var j = 0; j < myArray[i].length; j++) {
-        result += "<td padding='2'>" + myArray[i][j] + "</td>";
+        result += "<td width='auto' height='50'>" + myArray[i][j] + "</td>";
         }
         result += "</tr>";
     }
     result += "<tr >";
-      result += "<td>" + "สรุปคะแนน" + "</td>"
+      result += "<td width='auto' height='50'>" + "สรุปคะแนน" + "</td>"
       for (var index = 0; index < sumTotal.length; index++) {
-        result += "<td>" + sumTotal[index] + "</td>";
+        result += "<td width='auto' height='50'>" + sumTotal[index] + "</td>";
       }
     result += "</tr>";
     result += "</table>";
@@ -164,7 +164,7 @@ const ResultFour = ({data}) => {
 
     $(function () {
         var output = getPivotArray(concat4, 0, 1, 2, 3);
-        $("#pivotTable4").html(arrayToHTMLTableD(output));
+        $("#pivotTable4").html(arrayToHTMLTableD(output)).css({"background-color": "#F5F5F5"},{ 'font-family':'sans-serif'});
     });
 
     return(
@@ -173,7 +173,7 @@ const ResultFour = ({data}) => {
                 datas.length !== 0 ? (
                   <>
                   <CCardText style={{ lineHeight: 2, fontSize: 18, fontFamily: 'Prompt', textAlign: 'left', marginBottom: '20px' }}>
-                      4. คุณภาพ : ผลงานหรืองานที่ทำ มีความละเอียด ถูกต้อง ครบถ้วน ได้มาตารฐาน ไม่มีการแก้ไขหรือปรับปรุง
+                    4. ความน่าเชื่อถือ : ไว้ใจได้ มีความซื่อสัตย์ ไม่ต้องคอยตรวจเช็ค ตรวจสอบ หรือติดตามควบคุม
                   </CCardText> 
                     <div style={{marginBottom: '20px'}} id="pivotTable4"></div>
                     </>

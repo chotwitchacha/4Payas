@@ -37,7 +37,7 @@ const TableChartProten = ({result}) => {
 
     return(
         <>
-            <Table celled>
+            <Table celled fixed className="table">
                 <Table.Header>
                     <Table.Row >
                         <Table.HeaderCell >รายชื่อ</Table.HeaderCell>

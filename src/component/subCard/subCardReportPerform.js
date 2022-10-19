@@ -4,12 +4,16 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { ButtonGroup } from 'rsuite';
 import { Button } from '@material-ui/core';
-import TablePerform from "../table/tablePerform";
+import TableResultPerform from "../table/tableResultPerform";
+import SubTableResultPerform from "../table/subTableResultPerform";
 import TableData from "../table/tableData";
 import { Container } from "semantic-ui-react";
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import DropdownExampleSelection from '../../component/dropdown/dropdownData';
+import DropdownExampleSelection from '../dropdown/dropdownData';
+import DropdownRangeSelection from "../dropdown/dropdownRange";
+import CalendarsDateRangePicker from "../dateRange/dateRange";
+import Dialog from "../dialog/dialogPerform";
 import { Radio, Space, Select } from 'antd';
 import 'antd/dist/antd.css';
 import axios from "axios";
@@ -50,8 +54,7 @@ const data = [
   
   ]
 
-const PerformanceCard = () => {
-    
+const SubReportPerformCard = () => {
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -77,21 +80,10 @@ const PerformanceCard = () => {
     const [showModal, setShowModal] = useState(false)
     const [value, setValue] = useState();
     const [date, setDate] = useState(data)
-    const [employee, setEmpolyee] = useState([])
-    const [previousValue, setPreviousValue] = useState()
+    const [employee, setEmpolyee] = useState()
     const [list, setList] = useState()
     const [project,setProject] = useState([])
-    const [result, setResult] = useState([])
-    const initialdata = {
-        // project_id: '',
-        timline: ''
-        // employee_id: '',
-        // value_added: '',
-        // perform_radtio: '',
-        // waste: ''
-    };
     const { Option } = Select;
-    const children = [];
 
     useEffect(() => {
         axios.get('http://localhost:8090/api/project').
@@ -101,18 +93,37 @@ const PerformanceCard = () => {
         })
     }, []);
 
-    
-
     const dataprovider = project.map((item,index) => {
         return (
             <Option key={item.project_id} > {item.project_name} </Option>
         )
     })
 
+    const handleChange = (value) => {
+        setList(`${value}`) 
+    }
 
+    const onChangeRadio = (e) => {
+        console.log('radio checked', e.target.value);
+        setValue(e.target.value);
+    };
 
-    const getEmployee = () => {
-        axios.post('http://localhost:8090/api/user',{
+    const initialdata = {
+        timeline: value,
+        project_id: list
+    }
+
+    const [result, setResult] = useState(initialdata)
+    // useEffect(() => {  
+    //     console.log("data", employee);
+    //     }, [employee]);
+
+    const getEmployee = (e) => {
+        e.preventDefault();
+        setResult(initialdata)
+        console.log('initialdata', initialdata);
+        axios.post('http://localhost:8090/api/Subresult',{
+            timeline: value,
             project_id: list
         })
         .then((res) => {
@@ -120,14 +131,6 @@ const PerformanceCard = () => {
             setEmpolyee(res.data)
         })
     }
-
-    const handleChange = (value) => {
-        setList(`${value}`)
-        
-    }
-
-    console.log('list', list);
-    console.log('result', result);
 
     return (
 
@@ -139,16 +142,16 @@ const PerformanceCard = () => {
              <Grid item xs={12}>
                  <div>
                      <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 30, textAlign: 'left' }}>โปรดเลือกโปรเจค</div>
-                        <Container>
-                            <Select
-                                style={{ width: "100%" }}
-                                placeholder="เลือกโปรเจค"
-                                onChange={handleChange}
-                                value={list}
-                            >
-                                {dataprovider}
-                            </Select>
-                        </Container>
+                     <Container>
+                        <Select
+                            style={{ width: "100%" }}
+                            placeholder="เลือกโปรเจค"
+                            onChange={handleChange}
+                            value={list}
+                        >
+                            {dataprovider}
+                        </Select>
+                     </Container>
                  </div>
                  <div>
                     <div style={{ fontFamily: 'Prompt', fontSize: 16, padding: 30, textAlign: 'left' }}>ช่วงเวลา/รอบการประเมิน</div>
@@ -157,7 +160,7 @@ const PerformanceCard = () => {
                             <Space direction="vertical">
                                 { date.map((index) => (
                                 <>
-                                <Radio className={classes.text_time} value={index.timeline}> รอบที่{index.timeline}: {index.date}</Radio>
+                                <Radio className={classes.text_time} value={index.timeline}> รอบที่ {index.timeline}: {index.date}</Radio>
                                 
                                 </>
                                 ))}
@@ -169,7 +172,7 @@ const PerformanceCard = () => {
 
                  <Grid item xs={11} style={{ textAlign: 'end' }} >
                      <ButtonGroup >
-                         <Button onClick={getEmployee} className={classes.button}>
+                         <Button onClick={(e) => getEmployee(e)} className={classes.button}>
                              ตกลง
                          </Button>
                      </ButtonGroup>
@@ -183,12 +186,9 @@ const PerformanceCard = () => {
      <Item>
          <Grid container>
              <Grid item xs={12}>
-                 <TablePerform 
-                    
-                    empolyee={employee}
-                    project={list}
-                    timeline={value}
-                />
+                 <SubTableResultPerform 
+                    employee={employee}
+                 />
              </Grid>
          </Grid>
      </Item>
@@ -196,4 +196,4 @@ const PerformanceCard = () => {
 )
 };
 
-export default PerformanceCard;
+export default SubReportPerformCard;
