@@ -41,6 +41,10 @@
     "sweetalert": "^2.1.2",
     "web-vitals": "^1.0.1"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
