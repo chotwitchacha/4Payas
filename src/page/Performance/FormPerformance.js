@@ -113,7 +113,7 @@ const FormPerformance = ({show, setShow, employeeId, project, timeLine, employee
     const defaltText = (valu) => `${persent} ${per}`;
 
     const submit = (e) => {
-        axios.post('http://localhost:8090/api/addPerform', {
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/addPerform', {
             timeline: timeLine,
             employee_id: employeeId,
             value_added: value,
@@ -126,7 +126,7 @@ const FormPerformance = ({show, setShow, employeeId, project, timeLine, employee
         }).then((err) => {
             console.log(err);
         })
-        axios.post('http://localhost:8090/api/result',{
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/result',{
             timeline: timeLine,
             project_id: project
         })

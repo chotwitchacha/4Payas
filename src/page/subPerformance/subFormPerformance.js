@@ -96,7 +96,7 @@ const SubFormPerformance = ({show, setShow, employeeId, project, timeLine, emplo
     const defaltText = (valu) => `${persent} ${per}`;
 
     const submit = (e) => {
-        axios.post('http://localhost:8090/api/addSubPerform', {
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/addSubPerform', {
             timeline: timeLine,
             employee_id: employeeId,
             value_added: value,
@@ -104,30 +104,21 @@ const SubFormPerformance = ({show, setShow, employeeId, project, timeLine, emplo
             waste: waste,
             project_id: project
         }).then((res) => {
-            console.log("data",res.data);
             setHide(setShow)
         }).then((err) => {
             console.log(err);
         })
-        axios.post('http://localhost:8090/api/Subresult',{
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/Subresult',{
             timeline: timeLine,
-            project_id: project,
-            employee_id: employeeId
+            project_id: project
         })
         .then((res) => {
-            console.log("api", res.data)
             setResult(res.data)
+            localStorage.setItem("resultData", result)
         })
         
     }
-    
-    console.log('employee_id', employeeId);
-    // console.log('employeeId', employeeId);
-    // console.log('project', project);
-    // console.log('timeline', timeLine);
-    // console.log('Value Added', value);
-    // console.log('Ratio', persent);
-    // console.log('Waste', waste);
+
 
     const content = show && (
         <div className="overlay">

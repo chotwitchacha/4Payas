@@ -143,7 +143,7 @@ const Step2 = ({data, onPrevious, onNext, setShow, step, allData, onChanges, tim
         }
     })
     console.log("Data Success", dataSuccess)
-    axios.post('http://localhost:8090/api/insertReport',{
+    axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/insertReport',{
         project_id: projectId,
         timeline: timeline,
         question: step+1,
@@ -166,7 +166,7 @@ const Step2 = ({data, onPrevious, onNext, setShow, step, allData, onChanges, tim
           check.push({name: key, score: sumBy(values, "checked")})
         })
         
-        axios.post('http://localhost:8090/api/totalPotential',{
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/totalPotential',{
         project_id: projectId,
         timeline: timeline,
         question: step+1,

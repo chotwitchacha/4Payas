@@ -20,7 +20,7 @@ const RoutePath = () => (
 
             <Switch>
                 <Route  path="/dashboard/:id" component={Dashboard}/>
-                <Route  path="/dashboard/" component={Dashboard}/>
+                <Route  path="/dashboard" component={Dashboard}/>
                 <Route  path="/potential/assessment/:list/:value" component={FormPotential}/>
                 <Route  path="/performance/assessment" component={MainPerformance}/>
                 <Route  path="/potential/report" component={ReportDetail}/>

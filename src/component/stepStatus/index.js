@@ -55,7 +55,7 @@ const StepStatus = () => {
   const dataListB = [];
 
   useEffect(() => {
-    axios.post('http://localhost:8090/api/personPotential',{
+    axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/personPotential',{
         project_id: list
     })
     .then((res) => {

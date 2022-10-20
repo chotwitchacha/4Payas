@@ -36,7 +36,7 @@ const ReportDetail = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8090/api/report',{
+        axios.get('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/report',{
             timeline:"1",
             project_id: "1"
         })

@@ -27,7 +27,7 @@ const SubResultReport = () => {
             <AppBar position="static">
             </AppBar>
             <Typography className={classes.text} variant="h5">
-                ผลการประเมิน Performance ลูกน้อง
+                ผลการประเมิน Performance
             </Typography>
             <CardContent style={{ padding: 30 }}>
                 <SubReportPerformCard />

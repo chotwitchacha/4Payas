@@ -58,7 +58,7 @@ const TableChartProten = ({result}) => {
                                 <Table.Cell> {index.key} </Table.Cell>
                                 {
                                     index.scores.map((item) => (
-                                        <Table.Cell> <Progress progress='value' value={item.score} total={scoreMax}  color='pink' size='small' /> </Table.Cell>
+                                        <Table.Cell> <Progress progress='value' value={item.score} total={scoreMax}  color='pink'  /> </Table.Cell>
 
                                     ))
                                 }

@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { withRouter, Redirect } from "react-router";
 import axios from 'axios';
 import {AppContext} from '../ContextCase';
+import { getDisplayName } from '@mui/utils';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -102,13 +103,21 @@ const Signin = () => {
       password
     });
     if ('accessToken') {
-        const getData = await axios.post('http://localhost:8090/api/employee', {
+        const getData = await axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/employee', {
             email: username,
             password: password
           }).then((res) => res.data)
           const id = getData.map(item => item.employee_id)
+          const name = getData.map(item => item.name)
+          localStorage.setItem("name", name)
+          const getName = localStorage.getItem("name", name)
 
-          window.location.href = `/dashboard/${id}`;
+
+          if(getName === 'นางสาว ณิชาดา แสงมณี'){
+            window.location.href = `/dashboard`;  
+          } else if(getName === 'นาง ตรีรัก ดีประสงค์'){
+            window.location.href = `/subPerformance`;
+          }
 
           localStorage.setItem('accessToken', response['accessToken']);
           localStorage.setItem('user', JSON.stringify(response['user']));

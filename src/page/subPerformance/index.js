@@ -27,7 +27,7 @@ const SubPerformance = () => {
             <AppBar position="static">
             </AppBar>
             <Typography className={classes.text} variant="h5">
-                แบบประเมิน Performance ลูกน้อง
+                แบบประเมิน Performance
             </Typography>
             <CardContent style={{ padding: 30 }}>
                 <SubPerformanceCard />

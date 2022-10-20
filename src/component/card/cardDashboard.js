@@ -108,7 +108,7 @@ const CardDashbord = () => {
     const [resultPorten, setResultPoten] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8090/api/project').
+        axios.get('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/project').
         then((res) => {
             setProject(res.data)
         })
@@ -139,7 +139,7 @@ const CardDashbord = () => {
 
     const getEmployee = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8090/api/chartPerform',{
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/chartPerform',{
             timeline: value,
             project_id: list
         })
@@ -148,7 +148,7 @@ const CardDashbord = () => {
             setEmployee(res.data)
         })
 
-        axios.post('http://localhost:8090/api/resultScore',{
+        axios.post('http://59be-2405-9800-b641-124a-987f-1d6b-45e9-2d1d.ngrok.io/api/resultScore',{
             timeline: value,
             project_id: list
         })

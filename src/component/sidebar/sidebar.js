@@ -72,6 +72,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   let history = useHistory();
+  const data = localStorage.getItem("name")
 
   const [checked, setChecked] = useState(false);
 
@@ -94,13 +95,14 @@ export default function PersistentDrawerLeft() {
   const handleMenu = (event) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("name")
     window.location.href = "/";
   };
 
   return (
     <>
       {
-        checked === false ? (
+        data === 'นางสาว ณิชาดา แสงมณี' ? (
           <BrowserRouter>
           <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -118,9 +120,6 @@ export default function PersistentDrawerLeft() {
                 <Typography noWrap component="div" style={{ fontSize: 16, marginLeft: 5, color: '#153D77', fontFamily: 'Prompt' , marginRight: 'auto'}}>
                   SIPHYA CONSTRUCTION
                 </Typography>
-                <div>
-                  <Switch size='small' checked={checked} onClick={() => onClickSwitch(setChecked(!checked))}/>
-                </div>
               </Toolbar>
             </AppBar>
             <Drawer
@@ -150,7 +149,7 @@ export default function PersistentDrawerLeft() {
                 <Divider />
                 <IconButton onClick={handleMenu} color="inherit" style={{ marginTop: 15, marginLeft: 15 }}>
                   {/* <Avatar src={user.avatar} /> */}
-                  <p style={{ marginLeft: 10, fontFamily: 'Prompt', fontSize: 16 }}> นางสาว ณิชาดา แสงมณี </p>
+                  <p style={{ marginLeft: 10, fontFamily: 'Prompt', fontSize: 16 }}> {data} </p>
                 </IconButton>
               </div>
             </Drawer>
@@ -178,9 +177,6 @@ export default function PersistentDrawerLeft() {
                 <Typography noWrap component="div" style={{ fontSize: 16, marginLeft: 5, color: '#153D77', fontFamily: 'Prompt' , marginRight: 'auto'}}>
                   SIPHYA CONSTRUCTION
                 </Typography>
-                <div>
-                  <Switch size='small' checked={checked} onClick={() => onClickSwitch(setChecked(!checked))} />
-                </div>
               </Toolbar>
               
             </AppBar>
@@ -211,7 +207,7 @@ export default function PersistentDrawerLeft() {
                 <Divider />
                 <IconButton onClick={handleMenu} color="inherit" style={{ marginTop: 15, marginLeft: 15 }}>
                   {/* <Avatar src={user.avatar} /> */}
-                  <p style={{ marginLeft: 10, fontFamily: 'Prompt', fontSize: 16 }}> นาง ตรีรัก ดีประสงค์ </p>
+                  <p style={{ marginLeft: 10, fontFamily: 'Prompt', fontSize: 16 }}> {data} </p>
                 </IconButton>
               </div>
               
